@@ -21,7 +21,15 @@ Just include `thruk` in your node's `run_list`:
   "name":"my_node",
   "run_list": [
     "recipe[thruk]"
-  ]
+  ],
+  "override_attributes": {
+    "thruk": {
+      "use_ssl": true,
+      "htpasswd": "/etc/shinken/htpasswd.users",
+      "cert_name": "_.example.com",
+      "cert_ca_name": "gd_bundle",
+    }
+
 }
 ```
 
