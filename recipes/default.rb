@@ -38,7 +38,7 @@ remote_directory "#{node['thruk']['docroot']}/icons" do
   mode 0755
 end
 
-cookbook_file "#{node['thruk']['conf_dir']}/thruk_local.conf" do
+template "#{node['thruk']['conf_dir']}/thruk_local.conf" do
   mode 0644
 end
 

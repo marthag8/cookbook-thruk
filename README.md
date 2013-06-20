@@ -1,6 +1,13 @@
 thruk Cookbook
 ==============
-Setup Thruk (http://www.thruk.org/).
+
+Thruk is a multibackend monitoring web interface which currently
+supports Nagios, Icinga and Shinken as backend using the Livestatus
+API. It is designed to be a drop in replacement and covers almost all
+of the original features plus adds additional enhancements for large
+installations.
+
+See http://www.thruk.org/ for more information.
 
 Requirements
 ------------
@@ -28,7 +35,23 @@ Just include `thruk` in your node's `run_list`:
       "htpasswd": "/etc/shinken/htpasswd.users",
       "cert_name": "_.example.com",
       "cert_ca_name": "gd_bundle",
-    }
+      "start_page": "/thruk/cgi-bin/tac.cgi",
+      "first_day_of_week": 0,
+      "backends": {
+        "shinken": {
+          "name": "External Shinken",
+          "type": "livestatus",
+          "options": {
+            "peer": "127.0.0.01:50000",
+          },
+        },
+      },
+      "cmd_defaults": {
+        "ahas": 1,
+        "force_check": 1,
+        "persistent_ack": 1,
+      },
+   }
 
 }
 ```
