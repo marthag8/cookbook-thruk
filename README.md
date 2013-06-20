@@ -1,5 +1,5 @@
-thruk Cookbook
-==============
+Description
+===========
 
 Thruk is a multibackend monitoring web interface which currently
 supports Nagios, Icinga and Shinken as backend using the Livestatus
@@ -10,54 +10,49 @@ installations.
 See http://www.thruk.org/ for more information.
 
 Requirements
-------------
+============
 
 #### cookbooks
 - `apache2`
 
 Attributes
-----------
+==========
 
 Usage
------
+=====
 #### thruk::default
-Just include `thruk` in your node's `run_list`:
+Use the recipe directly, or include it in a role to customize it:
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[thruk]"
-  ],
-  "override_attributes": {
-    "thruk": {
-      "use_ssl": true,
-      "htpasswd": "/etc/shinken/htpasswd.users",
-      "cert_name": "_.example.com",
-      "cert_ca_name": "gd_bundle",
-      "start_page": "/thruk/cgi-bin/tac.cgi",
-      "first_day_of_week": 0,
-      "backends": {
-        "shinken": {
-          "name": "External Shinken",
-          "type": "livestatus",
-          "options": {
-            "peer": "127.0.0.01:50000",
+    % cat roles/thruk.rb
+    name "thruk"
+    run_list( "recipe[thruk]" )
+    override_attributes(
+      "thruk" => {
+        "use_ssl" => true,
+        "htpasswd" => "/etc/shinken/htpasswd.users",
+        "cert_name" => "_.example.com",
+        "cert_ca_name" => "gd_bundle",
+        "start_page" => "/thruk/cgi-bin/tac.cgi",
+        "first_day_of_week" => 0,
+        "backends" => {
+          "shinken" => {
+            "name" => "External Shinken",
+            "type" => "livestatus",
+            "options" => {
+              "peer" => "127.0.0.01 =>50000",
+            },
           },
         },
-      },
-      "cmd_defaults": {
-        "ahas": 1,
-        "force_check": 1,
-        "persistent_ack": 1,
-      },
-   }
-
-}
-```
+        "cmd_defaults" => {
+          "ahas" => 1,
+          "force_check" => 1,
+          "persistent_ack" => 1,
+        },
+     },
+   )
 
 Contributing
-------------
+============
 
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
@@ -67,5 +62,5 @@ Contributing
 6. Submit a Pull Request using Github
 
 License and Authors
--------------------
+===================
 Authors: Martha Greenberg
