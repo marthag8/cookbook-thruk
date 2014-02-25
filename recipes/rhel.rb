@@ -1,5 +1,5 @@
 # for mod_fcgid
-include_recipe "yum::epel"
+include_recipe "yum-epel"
 
 major = node['platform_version'].to_i
 machine = node['kernel']['machine']
