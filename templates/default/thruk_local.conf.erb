@@ -11,16 +11,16 @@ start_page = /thruk/cgi-bin/tac.cgi
 first_day_of_week = <%= node['thruk']['first_day_of_week'] %>
 
 <cmd_defaults>
-    ahas                   = 1  # For Hosts Too
-    broadcast_notification = 0  # Broadcast
-    force_check            = 1  # Forced Check
-    force_notification     = 0  # Forced Notification
-    send_notification      = 0  # Send Notification
-    sticky_ack             = 1  # Sticky Acknowledgement
-    persistent_comments    = 1  # Persistent Comments
-    persistent_ack         = 1  # Persistent Acknowledgement Comments
-    ptc                    = 0  # For Child Hosts Too
-    use_expire             = 0  # Use expire for acknowledgements (for cores which support this)
+    ahas                   = <%= node['thruk']['cmd_defaults']['ahas'] %>  # For Hosts Too
+    broadcast_notification = <%= node['thruk']['cmd_defaults']['broadcast_notification'] %>  # Broadcast
+    force_check            = <%= node['thruk']['cmd_defaults']['force_check'] %>  # Forced Check
+    force_notification     = <%= node['thruk']['cmd_defaults']['force_notification'] %>  # Forced Notification
+    send_notification      = <%= node['thruk']['cmd_defaults']['send_notification'] %>  # Send Notification
+    sticky_ack             = <%= node['thruk']['cmd_defaults']['sticky_ack'] %>  # Sticky Acknowledgement
+    persistent_comments    = <%= node['thruk']['cmd_defaults']['persistent_comments'] %>  # Persistent Comments
+    persistent_ack         = <%= node['thruk']['cmd_defaults']['persistent_ack'] %>  # Persistent Acknowledgement Comments
+    ptc                    = <%= node['thruk']['cmd_defaults']['ptc'] %>  # For Child Hosts Too
+    use_expire             = <%= node['thruk']['cmd_defaults']['use_expire'] %>  # Use expire for acknowledgements (for cores which support this)
 </cmd_defaults>
 
 <% unless node['thruk']['backends'].nil? %>
