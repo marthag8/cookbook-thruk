@@ -56,10 +56,9 @@ if node['thruk']['use_ssl']
     source "certs/#{node['thruk']['cert_name']}.key"
   end
   
-  if !node['thruk']['cert_ca_name'].nil?
-    cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_ca_name']}.crt" do
-      source "certs/#{node['thruk']['cert_ca_name']}.crt"
-    end
+  cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_ca_name']}.crt" do
+    source "certs/#{node['thruk']['cert_ca_name']}.crt"
+    not_if { node['thruk']['cert_ca_name'].nil? }
   end
 end
 
