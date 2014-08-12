@@ -39,7 +39,7 @@ Use the recipe directly, or include it in a role to customize it:
             "name" => "External Shinken",
             "type" => "livestatus",
             "options" => {
-              "peer" => "127.0.0.01 =>50000",
+              "peer" => "127.0.0.1:50000",
             },
           },
         },
