@@ -75,7 +75,7 @@ template "#{node['thruk']['conf_dir']}/cgi.cfg" do
   notifies :restart, "service[apache2]", :delayed
 end
 
-apache_site "thruk.conf"
+apache_site "thruk"
 
 service "thruk" do
   action [:enable, :start]
