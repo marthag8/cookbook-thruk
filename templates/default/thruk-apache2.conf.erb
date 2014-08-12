@@ -4,14 +4,14 @@
 
 <VirtualHost *:80>
   ServerAdmin     root@localhost
-  ServerName      <%= node['fqdn'] %>
+  ServerName      <%= node['thruk']['server_name'] || node['fqdn'] %>
 <% if node['thruk']['use_ssl'] %>
-  Redirect permanent / https://<%= node['fqdn'] %>/
+  Redirect permanent / https://<%= node['thruk']['server_name'] || node['fqdn'] %>/
 </VirtualHost>
 
 <VirtualHost *:443>
   ServerAdmin     root@localhost
-  ServerName      <%= node['fqdn'] %>
+  ServerName      <%= node['thruk']['server_name'] || node['fqdn'] %>
 <% end %>
   DocumentRoot    <%= node['thruk']['docroot'] %>
   CustomLog       <%= node['thruk']['log_dir'] %>/apache_access.log combined
