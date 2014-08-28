@@ -10,12 +10,11 @@ remote_file "#{Chef::Config[:file_cache_path]}/thruk-#{node['thruk']['version']}
   source "http://www.thruk.org/files/pkg/v#{node['thruk']['version']}/#{platform_family}#{major}/#{machine}/thruk-#{node['thruk']['version']}.#{platform_family}#{major}.#{machine}.rpm"
   backup false
   not_if "rpm -qa | grep -q '^thruk-#{node['thruk']['version']}'"
-  notifies :install, "rpm_package[thruk]", :immediately
+  notifies :install, "yum_package[thruk]", :immediately
 end
 
-rpm_package "thruk" do
+yum_package "thruk" do
   source "#{Chef::Config[:file_cache_path]}/thruk-#{node['thruk']['version']}.#{platform_family}#{major}.#{machine}.rpm"
-  options "--nodeps"
   action :nothing
 end
 
