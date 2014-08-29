@@ -1,6 +1,10 @@
-major = node['platform_version'].to_i
+if node['platform'] == 'debian'
+  major = node['platform_version'].to_i
+elsif node['platform'] == 'ubuntu'
+  major = node['platform_version']
+end
 machine = node['kernel']['machine']
-platform_family = node['platform_family']
+platform_family = node['platform']
 
 machine = 'amd64' if machine == 'x86_64'
 
