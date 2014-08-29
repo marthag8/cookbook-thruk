@@ -79,15 +79,18 @@ end
 if node['thruk']['use_ssl']
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_name']}.crt" do
     source "certs/#{node['thruk']['cert_name']}.crt"
+    notifies :restart, "service[apache2]"
   end
-  
+
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_name']}.key" do
     source "certs/#{node['thruk']['cert_name']}.key"
+    notifies :restart, "service[apache2]"
   end
-  
+
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_ca_name']}.crt" do
     source "certs/#{node['thruk']['cert_ca_name']}.crt"
     not_if { node['thruk']['cert_ca_name'].nil? }
+    notifies :restart, "service[apache2]"
   end
 end
 
