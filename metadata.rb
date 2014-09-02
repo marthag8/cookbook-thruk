@@ -11,3 +11,4 @@ depends "apache2"
 
 supports "centos"
 supports "debian"
+supports "ubuntu"
