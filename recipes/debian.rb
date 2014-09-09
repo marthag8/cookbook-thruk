@@ -29,3 +29,10 @@ file 'thruk-cleanup' do
   path "#{Chef::Config[:file_cache_path]}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb"
   action :delete
 end
+
+template '/etc/default/thruk' do
+  source 'thruk.default.erb'
+  variables(
+    :port => ':'+node['thruk']['apache']['port']
+  )
+end unless node['thruk']['apache']['port'].empty?
