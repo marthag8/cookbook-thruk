@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of thruk.
 
+## 0.2.5
+
+* add ability to change apache listen port for debian and ubuntu
+
 ## 0.1.0:
 
 * Initial release of thruk
