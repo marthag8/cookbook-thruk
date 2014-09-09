@@ -49,6 +49,9 @@ end
 template "#{node['apache']['dir']}/sites-available/thruk.conf" do
   source 'thruk-apache2.conf.erb'
   mode 00644
+  variables(
+    :port => node['thruk']['apache']['port'].empty? ? '80' : node['thruk']['apache']['port']
+  )
   if ::File.symlink?("#{node['apache']['dir']}/sites-enabled/thruk.conf")
     notifies :reload, 'service[apache2]', :immediately
   end

@@ -2,7 +2,7 @@
 # This file is managed by Chef.  Local modifications will be overwritten.
 #
 
-<VirtualHost *:80>
+<VirtualHost *:<%= @port %>>
   ServerAdmin     root@localhost
   ServerName      <%= node['thruk']['server_name'] || node['fqdn'] %>
 <% if node['thruk']['use_ssl'] %>
