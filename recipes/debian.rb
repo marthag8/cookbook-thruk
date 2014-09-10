@@ -22,6 +22,7 @@ end
 
 dpkg_package 'thruk' do
   source "#{Chef::Config[:file_cache_path]}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb"
+  options '--force-confold'
   action :nothing
 end
 
