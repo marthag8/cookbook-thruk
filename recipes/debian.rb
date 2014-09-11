@@ -1,6 +1,10 @@
-major = node['platform_version'].to_i
+if node['platform'] == 'debian'
+  major = node['platform_version'].to_i
+elsif node['platform'] == 'ubuntu'
+  major = node['platform_version']
+end
 machine = node['kernel']['machine']
-platform_family = node['platform_family']
+platform_family = node['platform']
 
 machine = 'amd64' if machine == 'x86_64'
 
@@ -18,6 +22,7 @@ end
 
 dpkg_package 'thruk' do
   source "#{Chef::Config[:file_cache_path]}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb"
+  options '--force-confold'
   action :nothing
 end
 
@@ -25,3 +30,11 @@ file 'thruk-cleanup' do
   path "#{Chef::Config[:file_cache_path]}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb"
   action :delete
 end
+
+template '/etc/default/thruk' do
+  source 'thruk.default.erb'
+  variables(
+    :port => ':'+node['thruk']['apache']['port'],
+    :server_name => node['thruk']['server_name'] || 'localhost'
+  )
+end unless node['thruk']['apache']['port'].empty?
