@@ -34,7 +34,7 @@ end
 template '/etc/default/thruk' do
   source 'thruk.default.erb'
   variables(
-    :port => ':'+node['thruk']['apache']['port']
+    :port => ':'+node['thruk']['apache']['port'],
     :server_name => node['thruk']['server_name'] || 'localhost'
   )
 end unless node['thruk']['apache']['port'].empty?
