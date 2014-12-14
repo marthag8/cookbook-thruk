@@ -6,8 +6,8 @@
 # settings from this file will override
 # those from the thruk.conf
 ############################################
-logo_path_prefix = /thruk/icons/
-start_page = /thruk/cgi-bin/tac.cgi
+logo_path_prefix = <%= node['thruk']['logo_path_prefix'] %>
+start_page = <%= node['thruk']['start_page'] %>
 first_day_of_week = <%= node['thruk']['first_day_of_week'] %>
 
 <cmd_defaults>

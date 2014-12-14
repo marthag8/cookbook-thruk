@@ -15,8 +15,9 @@ default['thruk']['cgi']['admin_group'] = 'admins'
 default['thruk']['cgi']['read_groups'] = 'all'
 
 
+default['thruk']['logo_path_prefix'] = '/thruk/icons/'
+default['thruk']['start_page'] = '/thruk/cgi-bin/tac.cgi'
 default['thruk']['first_day_of_week'] = 1
-default['thruk']['start_page'] = '/thruk/main.html'
 
 default['thruk']['cmd_defaults']['ahas'] = 0
 default['thruk']['cmd_defaults']['broadcast_notification'] = 0
