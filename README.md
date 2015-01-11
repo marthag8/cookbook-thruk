@@ -26,29 +26,38 @@ Usage
 Use the recipe directly, or include it in a role to customize it:
 
     % cat roles/thruk.rb
-    name "thruk"
-    run_list( "recipe[thruk]" )
+    name 'thruk'
+    run_list( 'recipe[thruk]' )
     override_attributes(
-      "thruk" => {
-        "use_ssl" => true,
-        "htpasswd" => "/etc/shinken/htpasswd.users",
-        "cert_name" => "_.example.com",
-        "cert_ca_name" => "gd_bundle",
-        "start_page" => "/thruk/cgi-bin/tac.cgi",
-        "first_day_of_week" => 0,
-        "backends" => {
-          "shinken" => {
-            "name" => "External Shinken",
-            "type" => "livestatus",
-            "options" => {
-              "peer" => "127.0.0.1:50000",
+      'thruk' => {
+        'use_ssl' => true,
+        'htpasswd' => '/etc/shinken/htpasswd.users',
+        'cert_name' => '_.example.com',
+        'cert_ca_name' => 'gd_bundle',
+        'start_page' => '/thruk/cgi-bin/tac.cgi',
+        'first_day_of_week' => 0,
+        'csrf_allowed_hosts' => '192.168.0.1',
+        'backends' => {
+          'shinken' => {
+            'name' => 'External Shinken',
+            'type' => 'livestatus',
+            'options' => {
+              'peer' => '127.0.0.1:50000',
             },
           },
         },
-        "cmd_defaults" => {
-          "ahas" => 1,
-          "force_check" => 1,
-          "persistent_ack" => 1,
+        'cmd_defaults' => {
+          'ahas' => 1,
+          'force_check' => 1,
+          'persistent_ack' => 1,
+          'sticky_ack' => 0,
+          'send_notification' => 0,
+          'persistent_comments' => 0,
+        },
+        'cgi' => {
+           'admin_group' => 'sysadmin',
+           'read_groups' => 'dev,misc',
+           'lock_authors_names' => 0,
         },
      },
    )
