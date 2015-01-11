@@ -1,5 +1,5 @@
 # for mod_fcgid
-include_recipe "yum-epel"
+include_recipe 'yum-epel'
 
 major = node['platform_version'].to_i
 machine = node['kernel']['machine']
@@ -10,15 +10,15 @@ remote_file "#{Chef::Config[:file_cache_path]}/thruk-#{node['thruk']['version']}
   source "http://www.thruk.org/files/pkg/v#{node['thruk']['version']}/#{platform_family}#{major}/#{machine}/thruk-#{node['thruk']['version']}.#{platform_family}#{major}.#{machine}.rpm"
   backup false
   not_if "rpm -qa | grep -q '^thruk-#{node['thruk']['version']}'"
-  notifies :install, "yum_package[thruk]", :immediately
+  notifies :install, 'yum_package[thruk]', :immediately
 end
 
-yum_package "thruk" do
+yum_package 'thruk' do
   source "#{Chef::Config[:file_cache_path]}/thruk-#{node['thruk']['version']}.#{platform_family}#{major}.#{machine}.rpm"
   action :nothing
 end
 
-file "thruk-cleanup" do
+file 'thruk-cleanup' do
   path "#{Chef::Config[:file_cache_path]}/thruk-#{node['thruk']['version']}.#{platform_family}#{major}.#{machine}.rpm"
   action :delete
 end
