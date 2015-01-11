@@ -13,6 +13,7 @@ default['thruk']['use_ssl'] = false
 default['thruk']['cert_name'] = node['fqdn']
 default['thruk']['cgi']['admin_group'] = 'admins'
 default['thruk']['cgi']['read_groups'] = 'all'
+default['thruk']['cgi']['lock_authors_names'] = 1
 
 default['thruk']['logo_path_prefix'] = '/thruk/icons/'
 default['thruk']['start_page'] = '/thruk/cgi-bin/tac.cgi'
