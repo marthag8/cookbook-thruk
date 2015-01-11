@@ -1,5 +1,25 @@
 
-default['thruk']['version'] = '1.84-6'
+default['thruk']['version'] = '1.86'
+
+default['thruk']['major'] = node['platform_version'].to_i
+
+if node['platform_family'] == 'debian'
+  default['thruk']['machine'] = node['kernel']['machine'] == 'x86_64' ? 'amd64' : node['kernel']['machine']
+  default['thruk']['pkg_url'] = "http://download.thruk.org/pkg/v#{node['thruk']['version']}/#{node['platform_family']}#{node['thruk']['major']}/#{node['thruk']['machine']}"
+
+  default['thruk']['pkg_name'] = "thruk_#{node['thruk']['version']}_#{node['platform_family']}#{node['thruk']['major']}_#{node['thruk']['machine']}.deb"
+
+else
+  default['thruk']['machine'] = node['kernel']['machine']
+  default['thruk']['pkg_url'] = "http://download.thruk.org/pkg/v#{node['thruk']['version']}/#{node['platform_family']}#{node['thruk']['major']}/#{node['thruk']['machine']}"
+
+  # packages on rhel have a -1 added if there is no minor version
+  if node['thruk']['version'] =~ /-/
+    default['thruk']['pkg_name'] = "thruk-#{node['thruk']['version']}.#{node['platform_family']}#{node['thruk']['major']}.#{node['thruk']['machine']}.rpm"
+  else
+    default['thruk']['pkg_name'] = "thruk-#{node['thruk']['version']}-1.#{node['platform_family']}#{node['thruk']['major']}.#{node['thruk']['machine']}.rpm"
+  end
+end
 
 default['thruk']['packages'] = %w(libcairo2 libcurl3 libfontconfig1 libfreetype6 libgd2-xpm libjpeg62 libmysqlclient16 libpng12-0 libxpm4 xvfb)
 

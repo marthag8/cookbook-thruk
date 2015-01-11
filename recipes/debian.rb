@@ -1,27 +1,22 @@
-major = node['platform_version'].to_i
-machine = node['kernel']['machine']
-platform_family = node['platform_family']
 
-machine = 'amd64' if machine == 'x86_64'
-
-node['thruk']['packages'].each do  |pkg|
+node['thruk']['packages'].each do |pkg|
   package pkg
 end
 
-remote_file "#{Chef::Config[:file_cache_path]}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb" do
+remote_file "#{Chef::Config[:file_cache_path]}/#{node['thruk']['pkg_name']}" do
   action :create_if_missing
-  source "http://www.thruk.org/files/pkg/v#{node['thruk']['version']}/#{platform_family}#{major}/#{machine}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb"
+  source "#{node['thruk']['pkg_url']}/#{node['thruk']['pkg_name']}"
   backup false
   not_if "dpkg-query -W thruk | grep -q '^thruk[[:blank:]]#{node['thruk']['version']}$'"
   notifies :install, 'dpkg_package[thruk]', :immediately
 end
 
 dpkg_package 'thruk' do
-  source "#{Chef::Config[:file_cache_path]}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb"
+  source "#{Chef::Config[:file_cache_path]}/#{node['thruk']['pkg_name']}"
   action :nothing
 end
 
 file 'thruk-cleanup' do
-  path "#{Chef::Config[:file_cache_path]}/thruk_#{node['thruk']['version']}_#{platform_family}#{major}_#{machine}.deb"
+  path "#{Chef::Config[:file_cache_path]}/#{node['thruk']['pkg_name']}"
   action :delete
 end
