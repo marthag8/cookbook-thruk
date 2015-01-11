@@ -76,7 +76,7 @@ default_user_name=thrukadmin
 # Alternatively you can specify contactgroups too
 
 authorized_for_system_information=thrukadmin
-authorized_contactgroup_for_system_information=<%= node["thruk"]["cgi"]["admin_group"] %>
+authorized_contactgroup_for_system_information=<%= node['thruk']['cgi']['admin_group'] %>
 
 
 # CONFIGURATION INFORMATION ACCESS
@@ -89,7 +89,7 @@ authorized_contactgroup_for_system_information=<%= node["thruk"]["cgi"]["admin_g
 # Alternatively you can specify contactgroups too
 
 authorized_for_configuration_information=thrukadmin
-authorized_contactgroup_for_configuration_information=<%= node["thruk"]["cgi"]["admin_group"] %>
+authorized_contactgroup_for_configuration_information=<%= node['thruk']['cgi']['admin_group'] %>
 
 
 # SYSTEM/PROCESS COMMAND ACCESS
@@ -103,7 +103,7 @@ authorized_contactgroup_for_configuration_information=<%= node["thruk"]["cgi"]["
 # Alternatively you can specify contactgroups too
 
 authorized_for_system_commands=thrukadmin
-authorized_contactgroup_for_system_commands=<%= node["thruk"]["cgi"]["admin_group"] %>
+authorized_contactgroup_for_system_commands=<%= node['thruk']['cgi']['admin_group'] %>
 
 
 # GLOBAL HOST/SERVICE VIEW ACCESS
@@ -116,10 +116,10 @@ authorized_contactgroup_for_system_commands=<%= node["thruk"]["cgi"]["admin_grou
 # Alternatively you can specify contactgroups too
 
 authorized_for_all_services=thrukadmin
-authorized_contactgroup_for_all_services=<%= node["thruk"]["cgi"]["read_groups"] %>
+authorized_contactgroup_for_all_services=<%= node['thruk']['cgi']['read_groups'] %>
 
 authorized_for_all_hosts=thrukadmin
-authorized_contactgroup_for_all_hosts=<%= node["thruk"]["cgi"]["read_groups"] %>
+authorized_contactgroup_for_all_hosts=<%= node['thruk']['cgi']['read_groups'] %>
 
 
 # GLOBAL HOST/SERVICE COMMAND ACCESS
@@ -133,10 +133,10 @@ authorized_contactgroup_for_all_hosts=<%= node["thruk"]["cgi"]["read_groups"] %>
 # Alternatively you can specify contactgroups too
 
 authorized_for_all_service_commands=thrukadmin
-authorized_contactgroup_for_all_service_commands=<%= node["thruk"]["cgi"]["admin_group"] %>
+authorized_contactgroup_for_all_service_commands=<%= node['thruk']['cgi']['admin_group'] %>
 
 authorized_for_all_host_commands=thrukadmin
-authorized_contactgroup_for_all_host_commands=<%= node["thruk"]["cgi"]["admin_group"] %>
+authorized_contactgroup_for_all_host_commands=<%= node['thruk']['cgi']['admin_group'] %>
 
 # READ-ONLY USERS
 # A comma-delimited list of usernames that have read-only rights in
@@ -146,7 +146,7 @@ authorized_contactgroup_for_all_host_commands=<%= node["thruk"]["cgi"]["admin_gr
 # Alternatively you can specify contactgroups too
 
 authorized_for_read_only=
-authorized_contactgroup_for_read_only=<%= node["thruk"]["cgi"]["read_groups"] %>
+authorized_contactgroup_for_read_only=<%= node['thruk']['cgi']['read_groups'] %>
 
 # REFRESH RATE
 # This option allows you to specify the refresh rate in seconds

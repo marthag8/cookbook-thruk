@@ -65,7 +65,7 @@
 
   <Location /thruk>
     Options ExecCGI
-    AuthName "Monitoring Access"
+    AuthName 'Monitoring Access'
     AuthType Basic
     AuthUserFile "<%= node['thruk']['htpasswd'] %>"
     require valid-user
