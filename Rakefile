@@ -22,8 +22,6 @@ task style: ['style:chef', 'style:ruby']
 
 desc 'Runs knife cookbook test'
 task :knife do
-  # Rake::Task[:prepare_sandbox].execute
-
   sh 'bundle exec knife cookbook test thruk -o ../'
 end
 
