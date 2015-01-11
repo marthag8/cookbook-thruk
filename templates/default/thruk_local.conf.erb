@@ -9,6 +9,9 @@
 logo_path_prefix = <%= node['thruk']['logo_path_prefix'] %>
 start_page = <%= node['thruk']['start_page'] %>
 first_day_of_week = <%= node['thruk']['first_day_of_week'] %>
+<% unless node['thruk']['csrf_allowed_hosts'].nil? %>
+csrf_allowed_hosts = <%= node['thruk']['csrf_allowed_hosts'] %>
+<% end %>
 
 <cmd_defaults>
     ahas                   = <%= node['thruk']['cmd_defaults']['ahas'] %>  # For Hosts Too
