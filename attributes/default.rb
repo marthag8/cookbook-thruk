@@ -1,7 +1,7 @@
 
 default['thruk']['version'] = '1.72-2'
 
-default['thruk']['packages'] = %w{libcairo2 libcurl3 libfontconfig1 libfreetype6 libgd2-xpm libjpeg62 libmysqlclient16 libpng12-0 libxpm4 xvfb}
+default['thruk']['packages'] = %w{libcairo2 libcurl3 libfontconfig1 libfreetype6 libgd2-xpm libjpeg62 libmysqlclient16 libpng12-0 libxpm4 xvfb logrotate}
 
 default['thruk']['dir']      = '/usr/share/thruk'
 default['thruk']['docroot']  = '/usr/share/thruk/root/thruk'
