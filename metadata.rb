@@ -8,6 +8,7 @@ version          '0.4.0'
 
 depends 'yum-epel'
 depends 'apache2'
+depends 'apt'
 
 supports 'centos'
 supports 'debian'
