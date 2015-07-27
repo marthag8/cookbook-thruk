@@ -39,7 +39,7 @@ if node['thruk']['version'] < '2.00'
   end
 elsif node['thruk']['version'] >= '2.00'
   apt_repository 'labs-thruk' do
-    uri          "deb http://labs.consol.de/repo/stable/#{node['platform']}"
+    uri          "http://labs.consol.de/repo/stable/#{node['platform']}"
     key          'F8C1CA08A57B9ED7'
     keyserver    'keys.gnupg.net'
     distribution node['lsb']['codename']
