@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of thruk.
 
+## 0.4.1
+
+* add ability to install thruk version 2.00 via labs repository
+
 ## 0.1.0:
 
 * Initial release of thruk

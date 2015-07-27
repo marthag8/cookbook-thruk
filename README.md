@@ -16,6 +16,8 @@ Requirements
 
 #### cookbooks
 - `apache2`
+- `yum-epel`
+- `apt`
 
 Attributes
 ==========
