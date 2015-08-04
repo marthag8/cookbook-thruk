@@ -38,6 +38,8 @@ default['thruk']['cgi']['lock_authors_names'] = 1
 default['thruk']['logo_path_prefix'] = '/thruk/icons/'
 default['thruk']['start_page'] = '/thruk/cgi-bin/tac.cgi'
 default['thruk']['first_day_of_week'] = 1
+default['thruk']['use_strict_host_authorization']  = 0
+default['thruk']['enable_shinken_features'] = 0
 
 default['thruk']['cmd_defaults']['ahas'] = 0
 default['thruk']['cmd_defaults']['broadcast_notification'] = 0
