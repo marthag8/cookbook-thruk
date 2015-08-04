@@ -49,3 +49,5 @@ default['thruk']['cmd_defaults']['persistent_comments'] = 1
 default['thruk']['cmd_defaults']['persistent_ack'] = 0
 default['thruk']['cmd_defaults']['ptc'] = 0
 default['thruk']['cmd_defaults']['use_expire'] = 0
+
+default['thruk']['plugins'] = %w(dashboard minemap mobile panorama reports2 statusmap)

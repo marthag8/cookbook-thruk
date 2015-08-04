@@ -46,6 +46,15 @@ file "#{node['apache']['dir']}/conf.d/thruk.conf" do
   notifies :reload, 'service[apache2]', :delayed
 end
 
+directory "#{node['thruk']['conf_dir']}/plugins/plugins-enabled"
+
+node['thruk']['plugins'].each do |plugin|
+  link "#{node['thruk']['conf_dir']}/plugins/plugins-enabled/#{plugin}" do
+    to "#{node['thruk']['conf_dir']}/plugins/plugins-available/#{plugin}"
+    notifies :restart, 'service[thruk]', :delayed
+  end
+end
+
 if node['thruk']['use_ssl']
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_name']}.crt" do
     source "certs/#{node['thruk']['cert_name']}.crt"
