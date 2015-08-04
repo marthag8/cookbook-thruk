@@ -1,5 +1,5 @@
 
-default['thruk']['version'] = '1.86'
+default['thruk']['version'] = '2.00-1'
 
 default['thruk']['major'] = node['platform_version'].to_i
 

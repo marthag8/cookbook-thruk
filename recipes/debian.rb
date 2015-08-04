@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-if node['thruk']['version'] < '2.00'
+if node['thruk']['version'].split('.')[0].to_i < 2
   node['thruk']['packages'].each do |pkg|
     package pkg
   end
@@ -37,7 +37,7 @@ if node['thruk']['version'] < '2.00'
     path "#{Chef::Config[:file_cache_path]}/#{node['thruk']['pkg_name']}"
     action :delete
   end
-elsif node['thruk']['version'] >= '2.00'
+else
   apt_repository 'labs-thruk' do
     uri          "http://labs.consol.de/repo/stable/#{node['platform']}"
     key          'F8C1CA08A57B9ED7'
