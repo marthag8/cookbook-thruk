@@ -10,14 +10,14 @@ logo_path_prefix = <%= node['thruk']['logo_path_prefix'] %>
 start_page = <%= node['thruk']['start_page'] %>
 first_day_of_week = <%= node['thruk']['first_day_of_week'] %>
 use_strict_host_authorization = <%= node['thruk']['use_strict_host_authorization'] %>
-enable_shinken_features =  <%= node['thruk']['enable_shinken_features'] %>
+enable_shinken_features = <%= node['thruk']['enable_shinken_features'] %>
 <% unless node['thruk']['csrf_allowed_hosts'].nil? %>
 csrf_allowed_hosts = <%= node['thruk']['csrf_allowed_hosts'] %>
 <% end %>
 
 <% if node['thruk'].key?('shinken_priorities') %>
 <priorities>
-<% if node['thruk']['shinken_priorities'].each do |k,v| %>
+<% node['thruk']['shinken_priorities'].each do |k,v| %>
    <%= k %> = <%= v %>
 <% end %>
 </priorities>
