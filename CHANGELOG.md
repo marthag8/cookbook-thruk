@@ -1,6 +1,11 @@
 # CHANGELOG for thruk
 
 This file is used to list changes made in each version of thruk.
+## 1.1.0
+
+* Add integration tests with ServerSpec on Centos 6.6 and Ubuntu 14.10.
+* Add unit tests with ChefSpec.
+
 ## 1.0.0
 
 * Change default thruk version to 2.00-1

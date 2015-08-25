@@ -1,8 +1,10 @@
 # -*- mode: ruby -*-
 
 require 'bundler/setup'
+require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'foodcritic'
+require 'kitchen'
 
 # Style tests. Rubocop and Foodcritic
 namespace :style do
@@ -20,9 +22,20 @@ end
 desc 'Run all style checks'
 task style: ['style:chef', 'style:ruby']
 
-desc 'Runs knife cookbook test'
-task :knife do
-  sh 'bundle exec knife cookbook test thruk -o ../'
+desc 'Run ChefSpec examples'
+RSpec::Core::RakeTask.new(:unit) do |t|
+  t.pattern = './**/unit/**/*_spec.rb'
 end
 
-task default: [:style, :knife]
+desc 'Run Test Kitchen'
+task :integration do
+  Kitchen.logger = Kitchen.default_file_logger
+  Kitchen::Config.new.instances.each do |instance|
+    instance.test(:always)
+  end
+end
+
+# Default
+task default: %w(style unit)
+
+task full: %w(style unit integration)

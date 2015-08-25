@@ -1,0 +1,19 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.6
+  # - name: centos-7.1
+  - name: ubuntu-14.10
+  # - name: ubuntu-15.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[curl::default]
+      - recipe[thruk::default]
+    attributes:

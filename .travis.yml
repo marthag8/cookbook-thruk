@@ -4,5 +4,5 @@ gemfile:
 rvm:
   - 2.0.0
 script: 
-  - bundle exec rake
+  - bundle exec rake full
 
