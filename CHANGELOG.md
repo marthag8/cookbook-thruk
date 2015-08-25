@@ -3,6 +3,7 @@
 This file is used to list changes made in each version of thruk.
 ## 1.1.0
 
+* Bugfixes based on new tests! Make sure we are not using mpm_event on apache 2.4, disable new apache thruk.conf, fix apt key import and force thruk to restart whenever apache restarts or reloads.
 * Add integration tests with ServerSpec on Centos 6.6 and Ubuntu 14.10.
 * Add unit tests with ChefSpec.
 

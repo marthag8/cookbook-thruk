@@ -5,6 +5,7 @@ if node['thruk']['version'].split('.')[0].to_i < 2
   remote_file "#{Chef::Config[:file_cache_path]}/#{node['thruk']['pkg_name']}" do
     action :create_if_missing
     source "#{node['thruk']['pkg_url']}/#{node['thruk']['pkg_name']}"
+    mode '0644'
     backup false
     not_if "rpm -qa | grep -q '^thruk-#{node['thruk']['version']}'"
     notifies :install, 'yum_package[thruk]', :immediately

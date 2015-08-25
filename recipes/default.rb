@@ -17,6 +17,15 @@
 # limitations under the License.
 #
 
+begin
+  include_recipe "thruk::#{node['platform_family']}"
+rescue Chef::Exceptions::RecipeNotFound
+  Chef::Log.warn "A thruk recipe does not exist for the platform_family: #{node['platform_family']}"
+end
+
+# force apache to use prefork mode - event requires recompiling php
+node.set['apache']['mpm'] = 'prefork' if node['apache']['mpm'] == 'event'
+
 include_recipe 'apache2'
 include_recipe 'apache2::mod_rewrite'
 include_recipe 'apache2::mod_php5'
@@ -27,18 +36,20 @@ apache_site '000-default' do
   enable false
 end
 
-begin
-  include_recipe "thruk::#{node['platform_family']}"
-rescue Chef::Exceptions::RecipeNotFound
-  Chef::Log.warn "A thruk recipe does not exist for the platform_family: #{node['platform_family']}"
+apache_config 'thruk' do
+  enable false
+end
+
+apache_config 'thruk_cookie_auth_vhost' do
+  enable false
 end
 
 remote_directory "#{node['thruk']['docroot']}/icons" do
-  mode 0755
+  mode '0755'
 end
 
 template "#{node['thruk']['conf_dir']}/thruk_local.conf" do
-  mode 0644
+  mode '0644'
 end
 
 file "#{node['apache']['dir']}/conf.d/thruk.conf" do
@@ -58,16 +69,19 @@ end
 if node['thruk']['use_ssl']
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_name']}.crt" do
     source "certs/#{node['thruk']['cert_name']}.crt"
+    mode '0644'
     notifies :restart, 'service[apache2]'
   end
 
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_name']}.key" do
     source "certs/#{node['thruk']['cert_name']}.key"
+    mode '0600'
     notifies :restart, 'service[apache2]'
   end
 
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_ca_name']}.crt" do
     source "certs/#{node['thruk']['cert_ca_name']}.crt"
+    mode '0644'
     not_if { node['thruk']['cert_ca_name'].nil? }
     notifies :restart, 'service[apache2]'
   end
@@ -75,14 +89,14 @@ end
 
 template "#{node['apache']['dir']}/sites-available/thruk.conf" do
   source 'thruk-apache2.conf.erb'
-  mode 00644
+  mode '0644'
   if ::File.symlink?("#{node['apache']['dir']}/sites-enabled/thruk.conf")
     notifies :reload, 'service[apache2]', :immediately
   end
 end
 
 template "#{node['thruk']['conf_dir']}/cgi.cfg" do
-  mode 0644
+  mode '0644'
   notifies :restart, 'service[apache2]', :delayed
 end
 
@@ -91,5 +105,6 @@ apache_site 'thruk'
 service 'thruk' do
   action [:enable, :start]
   ignore_failure true
-  subscribes :restart, "cookbook_file[#{node['thruk']['conf_dir']}/thruk_local.conf]", :immediately
+  subscribes :restart, "cookbook_file[#{node['thruk']['conf_dir']}/thruk_local.conf]"
+  subscribes :restart, 'service[apache2]', :delayed
 end
