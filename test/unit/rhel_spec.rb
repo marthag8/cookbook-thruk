@@ -22,7 +22,7 @@ describe 'thruk::rhel' do
     end
 
     it 'installs thruk' do
-      expect(chef_run).to install_package('thruk').with(version: '2.00-1')
+      expect(chef_run).to install_package('thruk')
     end
   end
 end

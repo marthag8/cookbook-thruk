@@ -58,12 +58,20 @@ describe 'thruk::default' do
       expect(chef_run).to_not create_cookbook_file('/etc/httpd/ssl/fauxhai.local.crt')
     end
 
+    it 'does not create /etc/default/thruk' do
+      expect(chef_run).to_not create_template('/etc/default/thruk')
+    end
+
     it 'installs apache site thruk.conf' do
       expect(chef_run).to create_template('/etc/httpd/sites-available/thruk.conf')
     end
 
     it 'create cgi.cfg template' do
       expect(chef_run).to create_template('/etc/thruk/cgi.cfg')
+    end
+
+    it 'will enable the thruk apache site' do
+      expect(chef_run).to_not run_execute('/usr/sbin/a2ensite thruk.conf')
     end
 
     it 'sets up thruk service' do
@@ -104,6 +112,10 @@ describe 'thruk::default' do
 
     it 'creates ssl ca cert' do
       expect(chef_run).to create_cookbook_file('/etc/httpd/ssl/test_bundle.crt')
+    end
+
+    it 'does creates /etc/default/thruk' do
+      expect(chef_run).to create_template('/etc/default/thruk')
     end
   end
 end

@@ -39,6 +39,8 @@ if node['thruk']['version'].split('.')[0].to_i < 2
     action :delete
   end
 else
+  include_recipe 'apt'
+
   apt_repository 'labs-thruk' do
     uri          "http://labs.consol.de/repo/stable/#{node['platform']}"
     key          'F8C1CA08A57B9ED7'

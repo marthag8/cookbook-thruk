@@ -32,6 +32,16 @@ include_recipe 'apache2::mod_php5'
 include_recipe 'apache2::mod_fcgid'
 include_recipe 'apache2::mod_ssl' if node['thruk']['use_ssl']
 
+if node['platform'] == 'centos' && node['apache']['version'] == '2.4'
+  apache_module 'unixd' do
+    enable false
+  end
+  link "#{node['apache']['dir']}/mods-enabled/0unixd.load" do
+    to "#{node['apache']['dir']}/mods-available/unixd.load"
+    notifies :reload, 'service[apache2]', :delayed
+  end
+end
+
 apache_site '000-default' do
   enable false
 end
@@ -45,6 +55,7 @@ apache_config 'thruk_cookie_auth_vhost' do
 end
 
 remote_directory "#{node['thruk']['docroot']}/icons" do
+  cookbook node['thruk']['icon_cookbook']
   mode '0755'
 end
 
@@ -68,43 +79,59 @@ end
 
 if node['thruk']['use_ssl']
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_name']}.crt" do
+    cookbook node['thruk']['cert_cookbook']
     source "certs/#{node['thruk']['cert_name']}.crt"
     mode '0644'
     notifies :restart, 'service[apache2]'
   end
 
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_name']}.key" do
+    cookbook node['thruk']['cert_cookbook']
     source "certs/#{node['thruk']['cert_name']}.key"
     mode '0600'
     notifies :restart, 'service[apache2]'
   end
 
   cookbook_file "#{node['apache']['dir']}/ssl/#{node['thruk']['cert_ca_name']}.crt" do
+    cookbook node['thruk']['cert_cookbook']
     source "certs/#{node['thruk']['cert_ca_name']}.crt"
     mode '0644'
     not_if { node['thruk']['cert_ca_name'].nil? }
     notifies :restart, 'service[apache2]'
   end
+
+  template '/etc/default/thruk' do
+    source 'thruk-default.erb'
+    mode '0644'
+  end
+
 end
 
 template "#{node['apache']['dir']}/sites-available/thruk.conf" do
   source 'thruk-apache2.conf.erb'
   mode '0644'
   if ::File.symlink?("#{node['apache']['dir']}/sites-enabled/thruk.conf")
-    notifies :reload, 'service[apache2]', :immediately
+    notifies :reload, 'service[apache2]', :delayed
   end
 end
 
 template "#{node['thruk']['conf_dir']}/cgi.cfg" do
   mode '0644'
-  notifies :restart, 'service[apache2]', :delayed
 end
 
-apache_site 'thruk'
+# we need apache to restart before thruk service starts
+execute 'a2ensite thruk.conf' do
+  command '/usr/sbin/a2ensite thruk.conf'
+  notifies :restart, 'service[apache2]', :immediately
+  not_if { ::File.symlink?("#{node['apache']['dir']}/sites-enabled/thruk.conf") }
+  only_if { ::File.exist?("#{node['apache']['dir']}/sites-available/thruk.conf") }
+end
 
 service 'thruk' do
   action [:enable, :start]
+  supports [:restart, :status]
   ignore_failure true
-  subscribes :restart, "cookbook_file[#{node['thruk']['conf_dir']}/thruk_local.conf]"
+  subscribes :restart, "template[#{node['thruk']['conf_dir']}/thruk_local.conf]"
+  subscribes :restart, 'template[/etc/default/thruk]' if node['thruk']['use_ssl']
   subscribes :restart, 'service[apache2]', :delayed
 end

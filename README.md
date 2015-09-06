@@ -25,6 +25,12 @@ Attributes
 
 Usage
 =====
+
+The 2.0.0 version of this cookbook moves the configuration attributes
+for thruk_local.conf to a hash (node['thruk']['conf']). This allows
+you to configure any settings for thruk, but you must change your
+current configuration.
+
 #### thruk::default
 Use the recipe directly, or include it in a role to customize it:
 
@@ -33,13 +39,30 @@ Use the recipe directly, or include it in a role to customize it:
     run_list( 'recipe[thruk]' )
     override_attributes(
       'thruk' => {
+        'server_name' => 'monitor.example.com'
         'use_ssl' => true,
         'htpasswd' => '/etc/shinken/htpasswd.users',
+        'cert_cookbook' => 'my_cookbook',
         'cert_name' => '_.example.com',
         'cert_ca_name' => 'gd_bundle',
-        'start_page' => '/thruk/cgi-bin/tac.cgi',
-        'first_day_of_week' => 0,
-        'csrf_allowed_hosts' => '192.168.0.1',
+        'icon_cookbook' => 'my_cookbook',
+	'conf' => {
+          'start_page' => '/thruk/cgi-bin/tac.cgi',
+          'first_day_of_week' => 0,
+          'csrf_allowed_hosts' => '192.168.0.1',
+          'disable_user_password_change' => 1,
+          'enable_shinken_features' => 1,
+          'logo_path_prefix' => '/thruk/icons/',
+          'use_strict_host_authorization' => 1,
+	},
+        'shinken_priorities' => {
+	  '5' => 'Top Production',
+          '4' => 'Production',
+          '3' => 'Integration',
+          '2' => 'Internal',
+          '1' => 'Testing',
+          '0' => 'Development',
+        },
         'backends' => {
           'shinken' => {
             'name' => 'External Shinken',

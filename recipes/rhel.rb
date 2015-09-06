@@ -1,6 +1,8 @@
 # for mod_fcgid
 include_recipe 'yum-epel'
 
+package 'perl-Data-Dumper' if node['platform_version'].to_f >= 7.0
+
 if node['thruk']['version'].split('.')[0].to_i < 2
   remote_file "#{Chef::Config[:file_cache_path]}/#{node['thruk']['pkg_name']}" do
     action :create_if_missing

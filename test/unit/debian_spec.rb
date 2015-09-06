@@ -9,6 +9,10 @@ describe 'thruk::debian' do
       expect { chef_run }.to_not raise_error
     end
 
+    it 'includes apt' do
+      expect(chef_run).to include_recipe('apt::default')
+    end
+
     it 'adds thruk apt repo' do
       expect(chef_run).to add_apt_repository('labs-thruk')
     end
