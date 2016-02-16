@@ -27,9 +27,9 @@
 <% end %>
 <% unless node['thruk']['backends'].nil? %>
 
+<Component Thruk::Backend>
 <% node['thruk']['backends'].each do |id,backend| %>
 # <%= id %>
-<Component Thruk::Backend>
     <peer>
         name   = <%= backend['name'] %>
         type   = <%= backend['type'] %>
@@ -48,6 +48,6 @@
        </configtool>
 <% end %>
     </peer>
+<% end %>
+<% end %>
 </Component>
-<% end %>
-<% end %>
