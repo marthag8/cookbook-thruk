@@ -11,9 +11,6 @@ depends 'yum-epel'
 depends 'apache2'
 depends 'apt'
 
-# needed for test-kitchen only
-recommends 'curl'
-
 supports 'centos'
 supports 'debian'
 supports 'ubuntu'
