@@ -2,8 +2,11 @@
 LineLength:
   Max: 999
 
-TrailingComma:
+TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
 
-SingleSpaceBeforeFirstArg:
+SpaceBeforeFirstArg:
+  Enabled: false
+
+Style/ConditionalAssignment:
   Enabled: false
