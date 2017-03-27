@@ -135,3 +135,18 @@ service 'thruk' do
   subscribes :restart, 'template[/etc/default/thruk]' if node['thruk']['use_ssl']
   subscribes :restart, 'service[apache2]', :delayed
 end
+
+Chef::Resource::File.send(:include, Thruk::Helpers)
+
+# require 'digest'
+# log "#{node['thruk']['secret_key']}"
+# node.normal_unless['thruk']['secret_key'] = Digest::MD5.new.hexdigest Random.new_seed.to_s
+# return node['thruk']['secret_key']
+
+file "#{node['thruk']['var_path']}/secret.key" do
+  content node['thruk']['secret_key'] || secret_key(node)
+  mode '0640'
+  owner 'www-data'
+  group 'www-data'
+  notifies :restart, 'service[thruk]'
+end
