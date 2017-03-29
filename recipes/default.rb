@@ -28,7 +28,6 @@ node.set['apache']['mpm'] = 'prefork' if node['apache']['mpm'] == 'event'
 
 include_recipe 'apache2'
 include_recipe 'apache2::mod_rewrite'
-include_recipe 'apache2::mod_php5'
 include_recipe 'apache2::mod_fcgid'
 include_recipe 'apache2::mod_ssl' if node['thruk']['use_ssl']
 
@@ -134,4 +133,14 @@ service 'thruk' do
   subscribes :restart, "template[#{node['thruk']['conf_dir']}/thruk_local.conf]"
   subscribes :restart, 'template[/etc/default/thruk]' if node['thruk']['use_ssl']
   subscribes :restart, 'service[apache2]', :delayed
+end
+
+Chef::Resource::File.send(:include, Thruk::Helpers)
+
+file "#{node['thruk']['var_path']}/secret.key" do
+  content node['thruk']['secret_key'] || secret_key(node)
+  mode '0640'
+  owner 'www-data'
+  group 'www-data'
+  notifies :restart, 'service[thruk]'
 end

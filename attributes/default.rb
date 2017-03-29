@@ -30,6 +30,7 @@ default['thruk']['conf_dir'] = '/etc/thruk'
 default['thruk']['htpasswd'] = '/etc/thruk/htpasswd'
 default['thruk']['use_ssl'] = false
 default['thruk']['server_name'] = node['fqdn']
+default['thruk']['var_path'] = '/var/lib/thruk'
 
 default['thruk']['cert_name'] = node['fqdn']
 default['thruk']['cert_cookbook'] = 'thruk'
