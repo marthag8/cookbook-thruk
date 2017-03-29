@@ -28,7 +28,6 @@ node.set['apache']['mpm'] = 'prefork' if node['apache']['mpm'] == 'event'
 
 include_recipe 'apache2'
 include_recipe 'apache2::mod_rewrite'
-# include_recipe 'apache2::mod_php5'
 include_recipe 'apache2::mod_fcgid'
 include_recipe 'apache2::mod_ssl' if node['thruk']['use_ssl']
 
@@ -137,11 +136,6 @@ service 'thruk' do
 end
 
 Chef::Resource::File.send(:include, Thruk::Helpers)
-
-# require 'digest'
-# log "#{node['thruk']['secret_key']}"
-# node.normal_unless['thruk']['secret_key'] = Digest::MD5.new.hexdigest Random.new_seed.to_s
-# return node['thruk']['secret_key']
 
 file "#{node['thruk']['var_path']}/secret.key" do
   content node['thruk']['secret_key'] || secret_key(node)
